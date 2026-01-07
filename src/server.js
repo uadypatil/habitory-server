@@ -20,6 +20,10 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 // ── App Initialization ────────────────────────────────────────────────────────
 const app = express();
 
+// ── Database conenction ────────────────────────────────────────────────────────
+const connectDB = require('./config/db.factory');
+connectDB(); // 🔥 connect MongoDB here
+
 // ── Global Middleware ─────────────────────────────────────────────────────────
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
@@ -43,7 +47,7 @@ fs.readdirSync(routesPath)
 
     if (typeof route === 'function') {
       // Mount all routes under /app/*
-      app.use('/apo', route);
+      app.use('/api', route);
       console.log(`✔ Route loaded: ${file}`);
     }
   });
